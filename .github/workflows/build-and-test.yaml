@@ -52,6 +52,11 @@ jobs:
       name: Environment
       run : |
         echo  IMAGE=$(echo ${{ env.IMAGE }} | tr '[:upper:]' '[:lower:]')  >>$GITHUB_ENV
+    - 
+      name: Add --no-check-certificate to wget
+      run: |
+       sed -i 's|wget -O /data/region.osm.pbf|wget --no-check-certificate -O /data/region.osm.pbf|g' ./run.sh
+       sed -i 's|wget -O /data/region.poly|wget --no-check-certificate -O /data/region.poly|g' ./run.sh  
     -
       name: Docker build
       uses: docker/build-push-action@v3
